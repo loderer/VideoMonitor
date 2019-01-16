@@ -7,17 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  public mediaDevices: Array<MediaStream>;
-
   constructor() {
-    this.mediaDevices = [];
-    this.getMediaDevices();
+    this.initStreams();
   }
 
   ngOnInit() {
   }
 
-getMediaDevices() {
+initStreams() {
     var videoNumber = 0;
     navigator.mediaDevices.enumerateDevices()
      .then((devices) => {
@@ -39,9 +36,5 @@ getMediaDevices() {
      .catch((err) => {
        console.log(err.name + ": " + err.message);
      });
-  }
-
-  logHelloWorld() {
-    console.log('HelloWorld!!!');
   }
 }
