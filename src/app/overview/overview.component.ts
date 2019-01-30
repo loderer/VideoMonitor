@@ -15,21 +15,18 @@ export class OverviewComponent implements OnInit {
   }
 
 initStreams() {
-    var videoNumber = 0;
     navigator.mediaDevices.enumerateDevices()
      .then((devices) => {
        devices.forEach((device) => {
          if(device.kind === 'videoinput') {
            var constraints = { deviceId: { exact: device.deviceId } };
-           var tmpVideoNumber = videoNumber;
            var container = document.getElementById("container");
-           container.innerHTML += '<video id="video' + tmpVideoNumber + '" autoplay style="flex-grow:1;"></video>';
+           container.innerHTML += '<video id="video' + device.deviceId + '" autoplay style="flex-grow:1;"></video>';
            navigator.mediaDevices.getUserMedia({ video: constraints })
            .then((stream) => {
-             var video = (<HTMLVideoElement> document.querySelector('#video' + tmpVideoNumber));
+             var video = (<HTMLVideoElement> document.querySelector('#video' + device.deviceId));
              video.srcObject = stream;
            });
-           videoNumber++;
          }
        });
      })
